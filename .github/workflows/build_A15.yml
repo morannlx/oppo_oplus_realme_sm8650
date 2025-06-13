@@ -13,8 +13,8 @@ env:
 on:
   workflow_dispatch:
   # 取消此处注释代码可开启每日定时编译
-  schedule:
-    - cron: '0 23 * * *'  # UTC时间23点（北京时间次日7点）
+ # schedule:
+   # - cron: '0 23 * * *'  # UTC时间23点（北京时间次日7点）
     inputs:
       lz4k_enable:
         description: '是否安装 LZ4K 补丁'
