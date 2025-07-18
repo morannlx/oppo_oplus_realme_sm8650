@@ -1,12 +1,12 @@
-name: Realme GT5 5.15 Android 15 
+name: Realme GT6 6.1.75 Android 15 
 
 env:
   TZ: Asia/Shanghai
-  CPU: 'sm8550'
+  CPU: 'sm8650'
   FEIL: 'oppo+oplus+realme'
-  ANDROID_VERSION: 'android13'
-  KERNEL_VERSION: '5.15'
-  KERNEL_NAME: 'android13-11-o-gca13bffobf09'
+  ANDROID_VERSION: 'android14'
+  KERNEL_VERSION: '6.1'
+  KERNEL_NAME: 'android14-11-o-gca13bffobf09'
   KERNELSU_VARIANT: 'SukiSU-Ultra'
   KERNELSU_BRANCH: 'susfs-main'
 
@@ -101,7 +101,7 @@ jobs:
         run: |
           rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
           echo "正在克隆源码仓库..."
-          git clone --depth=1 https://github.com/morannlx/realme_GT5-AndroidV-common-source -b master common
+          git clone --depth=1 https://github.com/morannlx/realme_neo7-AndroidV-kernel-source.git -b master common
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
           rm common/android/abi_gki_protected_exports_* || true
           for f in common/scripts/setlocalversion; do
