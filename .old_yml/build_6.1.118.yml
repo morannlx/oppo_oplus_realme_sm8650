@@ -41,7 +41,7 @@ on:
           - 'true'
           - 'false'
       lz4_enable:
-        description: '是否安装 lz4 + zstd 补丁'
+        description: '是否安装 lz4 1.10.0 + zstd 1.5.7 补丁'
         required: true
         type: choice
         default: 'true'
@@ -58,7 +58,7 @@ on:
           - 'true'
           - 'default'
       better_net:
-        description: '是否开启网络功能增强优化配置'
+        description: '是否开启网络功能增强优化配置(优化代理连接,IPV6等功能)'
         required: true
         type: choice
         default: 'true'
@@ -66,7 +66,7 @@ on:
           - 'true'
           - 'false'
       ssg_enable:
-        description: '是否启用三星SSG IO调度器'
+        description: '是否启用三星SSG IO调度器(一加12等极少数机型开启后可能不开机,若出现bug请关闭此项)'
         required: true
         type: choice
         default: 'true'
@@ -82,7 +82,7 @@ on:
           - 'true'
           - 'false'
       kernel_suffix:
-        description: '内核后缀(留空默认,开头别加连字符)'
+        description: '内核后缀(留空默认,开头别加连字符,勿加空格等影响指令运行的保留字符)'
         required: false
         type: string
         default: ''
@@ -228,6 +228,8 @@ jobs:
             #sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g' ./common/arch/arm64/configs/gki_defconfig
             #sed -i 's/CONFIG_MODULE_SIG=y/CONFIG_MODULE_SIG=n/g' ./common/arch/arm64/configs/gki_defconfig
           fi
+          # 开启O2编译优化配置
+          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> ./common/arch/arm64/configs/gki_defconfig
           #禁用 defconfig 检查
           sed -i 's/check_defconfig//' ./common/build.config.gki
           
@@ -343,7 +345,7 @@ jobs:
             cp -r ./sched_ext/* ./common/kernel/sched
           fi
           cd common
-          make -j$(nproc --all) LLVM=-20 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnuabeihf- CC=clang LD=ld.lld HOSTCC=clang HOSTLD=ld.lld O=out KCFLAGS+=-Wno-error gki_defconfig all
+          make -j$(nproc --all) LLVM=-20 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnuabeihf- CC=clang LD=ld.lld HOSTCC=clang HOSTLD=ld.lld O=out KCFLAGS+=-O2 KCFLAGS+=-Wno-error gki_defconfig all
           echo "内核编译完成！"
          
       - name: 应用patch_linux并修补内核
