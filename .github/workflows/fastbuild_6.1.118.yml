@@ -210,11 +210,11 @@ jobs:
           # KSU_VERSION_FULL: 完整版本定义
           VERSION_DEFINITIONS=$(cat << EOF
           define get_ksu_version_full
-          v\\$1-SukiSU-cctv18
+          v\\$1-inkdye
           endef
 
           KSU_VERSION_API := $KSU_API_VERSION
-          KSU_VERSION_FULL := v$KSU_API_VERSION-SukiSU-cctv18
+          KSU_VERSION_FULL := v$KSU_API_VERSION-inkdye
           EOF
               )
           # 清理内核 Makefile 中的旧版本定义
